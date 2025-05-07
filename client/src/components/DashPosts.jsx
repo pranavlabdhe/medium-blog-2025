@@ -508,15 +508,15 @@ export default function DashPosts() {
       try {
         let posts = [];
 
-        if (currentUser.isAdmin) {
+        if (currentUser?.isAdmin) {
           const res = await fetch('https://medium-blog-2025.onrender.com/api/post/adminposts');
           const data = await res.json();
-          console.log('Admin posts response:', data); // DEBUG
+          console.log('Admin posts response:', data);
           posts = Array.isArray(data) ? data : data.posts || [];
         } else {
-          const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser._id}`);
+          const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser?._id}`);
           const data = await res.json();
-          console.log('User posts response:', data); // DEBUG
+          console.log('User posts response:', data);
           posts = Array.isArray(data) ? data : data.posts || [];
         }
 
@@ -542,9 +542,7 @@ export default function DashPosts() {
       if (!res.ok) {
         console.error(data.message);
       } else {
-        setUserPosts((prev) =>
-          prev.filter((post) => post._id !== postIdToDelete)
-        );
+        setUserPosts((prev) => prev.filter((post) => post._id !== postIdToDelete));
       }
     } catch (error) {
       console.error(error.message);
