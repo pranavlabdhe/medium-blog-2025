@@ -31,7 +31,7 @@ const app = express();
 app.use(cors(
   {
     origin:['https://medium-blog-2025.vercel.app'],
-    methods:['POST', 'GET'],
+    methods:['POST', 'GET','PUT', 'PATCH', 'DELETE'],
     credentials:true
   }
 ))
