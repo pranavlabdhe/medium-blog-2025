@@ -10,8 +10,9 @@ router.get('/adminposts', allPost)
 router.get('/posts/:userId', getpostsOfUser)
 
 
-router.delete('/deletepost/:postId/:userId', verifyToken, deletepost)
-router.put('/updatepost/:postId/:userId', verifyToken, updatepost)
+// router.delete('/deletepost/:postId/:userId', verifyToken, deletepost)
+// router.put('/updatepost/:postId/:userId', verifyToken, updatepost)
 
-
+router.delete('/deletepost/:postId/:userId', deletepost)
+router.put('/updatepost/:postId/:userId', updatepost)
 export default router;
