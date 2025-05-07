@@ -4,8 +4,8 @@ import { create, deletepost, getposts, updatepost,getpostsOfUser, allPost } from
 
 const router = express.Router();
 
-// router.post('/create', verifyToken, create)
-router.post('/create', create)
+router.post('/create', verifyToken, create)
+// router.post('/create', create)
 
 router.get('/getposts', getposts)
 router.get('/adminposts', allPost)
