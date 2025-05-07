@@ -28,11 +28,18 @@ mongoose
 const __dirname = path.resolve();
 
 const app = express();
+// app.use(cors(
+//   {
+//     origin:['https://medium-blog-2025.vercel.app'],
+//     methods:['POST', 'GET','PUT', 'PATCH', 'DELETE'],
+//     credentials:true
+//   }
+// ))
+
 app.use(cors(
   {
-    origin:['https://medium-blog-2025-2.onrender.com'],
-    methods:['POST', 'GET','PUT', 'PATCH', 'DELETE'],
-    credentials:true
+    origin: 'http://localhost:5173', // or http://localhost:3000
+    credentials: true, // 🔴 Important to allow cookies
   }
 ))
 app.use(express.json());
@@ -59,6 +66,8 @@ app.use(express.static(path.join(__dirname, '/client/dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
+
+
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

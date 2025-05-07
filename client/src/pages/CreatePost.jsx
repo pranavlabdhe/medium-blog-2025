@@ -63,11 +63,12 @@ export default function CreatePost() {
     try {
       const res = await fetch('https://medium-blog-2025.onrender.com/api/post/create', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-        credentials: 'include',
+      
       });
       const data = await res.json();
       if (!res.ok) {
