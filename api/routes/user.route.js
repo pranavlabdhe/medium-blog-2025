@@ -19,7 +19,7 @@ router.get('/getusers', verifyToken, getUsers);
 router.get('/:userId', getUser);
 
 export default router;
-// const openaiClient = new openai.OpenAI({apiKey:'***REMOVED***YR4X1RlEJDOT1syRq5DXT3BlbkFJl05ligQqx8ZpkXWhyJ5h'});
+// const openaiClient = new openai.OpenAI({apiKey:process.env.OPENAI_API_KEY});
 // export const translateFun = async (req, res, next) => {
 //     try {
 //         const { text, source_language, target_language } = req.body;
