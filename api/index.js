@@ -30,7 +30,7 @@ const __dirname = path.resolve();
 const app = express();
 app.use(cors(
   {
-    origin:['https://medium-blog-2025-2.onrender.com/'],
+    origin:['https://medium-blog-2025-2.onrender.com'],
     methods:['POST', 'GET','PUT', 'PATCH', 'DELETE'],
     credentials:true
   }
