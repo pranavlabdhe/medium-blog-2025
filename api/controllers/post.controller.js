@@ -128,8 +128,6 @@
 //   }
 // };
 
-
-
 import Post from '../models/post.model.js';
 import { errorHandler } from '../utils/error.js';
 
@@ -137,19 +135,19 @@ export const create = async (req, res, next) => {
   if (!req.body.title || !req.body.content) {
     return next(errorHandler(400, 'Please provide all required fields'));
   }
-  
+
   const slug = req.body.title
     .split(' ')
     .join('-')
     .toLowerCase()
     .replace(/[^a-zA-Z0-9-]/g, '');
-  
+
   const newPost = new Post({
     ...req.body,
     slug,
     userId: req.user.id,
   });
-  
+
   try {
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
@@ -158,33 +156,31 @@ export const create = async (req, res, next) => {
   }
 };
 
+// ✅ Updated getposts function (no token required)
 export const getposts = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === 'asc' ? 1 : -1;
 
-    // Admins can see all posts, regular users can see only their own posts
-    let query = {};
+    const isAdmin = req.query.isAdmin === 'true';
+    const userId = req.query.userId;
 
-    if (!req.user.isAdmin) {
-      // Regular user can only see their own posts
-      query.userId = req.user.id;
+    const query = {};
+
+    // If user is not admin, they must provide their userId to fetch only their posts
+    if (!isAdmin) {
+      if (!userId) {
+        return next(errorHandler(400, 'userId is required for regular users'));
+      }
+      query.userId = userId;
     }
 
-    // Add additional filters based on query parameters
-    if (req.query.userId) {
-      query.userId = req.query.userId;
-    }
-    if (req.query.category) {
-      query.category = req.query.category;
-    }
-    if (req.query.slug) {
-      query.slug = req.query.slug;
-    }
-    if (req.query.postId) {
-      query._id = req.query.postId;
-    }
+    // Add optional filters
+    if (req.query.category) query.category = req.query.category;
+    if (req.query.slug) query.slug = req.query.slug;
+    if (req.query.postId) query._id = req.query.postId;
+
     if (req.query.searchTerm) {
       query.$or = [
         { title: { $regex: req.query.searchTerm, $options: 'i' } },
@@ -192,7 +188,6 @@ export const getposts = async (req, res, next) => {
       ];
     }
 
-    // Fetch posts based on the constructed query
     const posts = await Post.find(query)
       .sort({ updatedAt: sortDirection })
       .skip(startIndex)
@@ -202,7 +197,11 @@ export const getposts = async (req, res, next) => {
 
     const now = new Date();
     const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-    const lastMonthPosts = await Post.countDocuments({ createdAt: { $gte: oneMonthAgo } });
+
+    const lastMonthPosts = await Post.countDocuments({
+      createdAt: { $gte: oneMonthAgo },
+      ...query,
+    });
 
     res.status(200).json({
       posts,
@@ -210,6 +209,7 @@ export const getposts = async (req, res, next) => {
       lastMonthPosts,
     });
   } catch (error) {
+    console.error('Error in getposts:', error);
     next(error);
   }
 };
@@ -227,13 +227,12 @@ export const getpostsOfUser = async (req, res, next) => {
     }
   } catch (error) {
     console.error('Error fetching posts:', error);
-    next(error); // Pass the error to the error handling middleware
+    next(error);
   }
 };
 
 export const allPost = async (req, res, next) => {
   try {
-    // Fetch all posts from the database
     const posts = await Post.find();
     res.json(posts);
   } catch (error) {
