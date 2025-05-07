@@ -38,7 +38,8 @@ const app = express();
 
 app.use(cors(
   {
-    origin: 'http://localhost:5173', // or http://localhost:3000
+    origin: 'https://medium-blog-2025.vercel.app', // or http://localhost:3000
+    methods:['POST', 'GET','PUT', 'PATCH', 'DELETE'],
     credentials: true, // 🔴 Important to allow cookies
   }
 ))
