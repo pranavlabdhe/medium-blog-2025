@@ -30,7 +30,7 @@ const __dirname = path.resolve();
 const app = express();
 app.use(cors(
   {
-    origin:[''],
+    origin:['https://medium-blog-2025.vercel.app'],
     methods:['POST', 'GET'],
     credentials:true
   }
