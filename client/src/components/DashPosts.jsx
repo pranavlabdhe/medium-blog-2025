@@ -497,26 +497,38 @@ import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 export default function DashPosts() {
-  const { currentUser } = useSelector((state) => state.user);
+  const reduxUser = useSelector((state) => state.user?.currentUser);
+  const [currentUser, setCurrentUser] = useState(reduxUser || null);
   const [userPosts, setUserPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
+  // ✅ Load current user from localStorage if Redux is empty
   useEffect(() => {
+    if (!reduxUser) {
+      const persistedData = JSON.parse(localStorage.getItem("persist:root"));
+      const user = persistedData?.user ? JSON.parse(persistedData.user).currentUser : null;
+      setCurrentUser(user);
+    }
+  }, [reduxUser]);
+
+  // ✅ Fetch posts when currentUser is available
+  useEffect(() => {
+    if (!currentUser) return;
+
     const fetchPosts = async () => {
       try {
         let posts = [];
-
-        if (currentUser?.isAdmin) {
+        console.log('Current user:', currentUser);
+        if (currentUser.isAdmin) {
           const res = await fetch('https://medium-blog-2025.onrender.com/api/post/adminposts');
           const data = await res.json();
-          console.log('Admin posts response:', data);
           posts = Array.isArray(data) ? data : data.posts || [];
         } else {
-          const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser?._id}`);
+          // https://medium-blog-2025.onrender.com/api/post/posts/681bad025b2d718becb8d204
+          const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/posts/${currentUser._id}`);
           const data = await res.json();
-          console.log('User posts response:', data);
           posts = Array.isArray(data) ? data : data.posts || [];
         }
 
@@ -542,7 +554,9 @@ export default function DashPosts() {
       if (!res.ok) {
         console.error(data.message);
       } else {
-        setUserPosts((prev) => prev.filter((post) => post._id !== postIdToDelete));
+        setUserPosts((prev) =>
+          prev.filter((post) => post._id !== postIdToDelete)
+        );
       }
     } catch (error) {
       console.error(error.message);
