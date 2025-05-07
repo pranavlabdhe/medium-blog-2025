@@ -4,7 +4,7 @@ import { fetchPostsStart1, fetchPostsSuccess1, fetchPostsFailure1 } from './Admi
 export const fetchPostsByAdmin = () => async (dispatch) => {
     dispatch(fetchPostsStart1());
     try {
-      const response = await axios.get(`/api/post/adminposts`);
+      const response = await axios.get(`https://medium-blog-2025.onrender.com/api/post/adminposts`);
       dispatch(fetchPostsSuccess1(response.data));
     } catch (error) {
       dispatch(fetchPostsFailure1(error.message));

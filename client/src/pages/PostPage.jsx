@@ -25,7 +25,7 @@ export default function PostPage() {
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/post/getposts?slug=${postSlug}`);
+        const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?slug=${postSlug}`);
         const data = await res.json();
         if (!res.ok) {
           setError(true);
@@ -48,7 +48,7 @@ export default function PostPage() {
   useEffect(() => {
     try {
       const fetchRecentPosts = async () => {
-        const res = await fetch(`/api/post/getposts?limit=3`);
+        const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?limit=3`);
         const data = await res.json();
         if (res.ok) {
           setRecentPosts(data.posts);
@@ -68,8 +68,8 @@ export default function PostPage() {
           // Strip HTML tags from the post content
           const strippedContent = post.content.replace(/<[^>]+>/g, '');
           const res = await fetch(
-            // "https://medium-blog-post.onrender.com/api/textToSpeechfun/textToSpeech",
-            'http://localhost:3000/api/textToSpeechfun/textToSpeech',
+            // "https://medium-blog-post.onrender.comhttps://medium-blog-2025.onrender.com/api/textToSpeechfun/textToSpeech",
+            'http://localhost:3000https://medium-blog-2025.onrender.com/api/textToSpeechfun/textToSpeech',
             {
               method: "POST",
               headers: {
@@ -105,7 +105,7 @@ const summarizeFun = async () => {
   setShowSummarizedContentLoading(true);
   setShowSummarizeContent((prevState)=>!prevState)
   try {
-    const response = await fetch('/api/summaryFun/summary', {
+    const response = await fetch('https://medium-blog-2025.onrender.com/api/summaryFun/summary', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -214,7 +214,7 @@ const summarizeFun = async () => {
 //     const fetchPost = async () => {
 //       try {
 //         setLoading(true);
-//         const res = await fetch(`/api/post/getposts?slug=${postSlug}`);
+//         const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?slug=${postSlug}`);
 //         const data = await res.json();
 //         if (!res.ok) {
 //           setError(true);
@@ -241,7 +241,7 @@ const summarizeFun = async () => {
 //           setSpeechUrlLoading(true);
 //           const strippedContent = post.content.replace(/<[^>]+>/g, '');
 //           const res = await fetch(
-//             "https://medium-blog-post.onrender.com/api/textToSpeechfun/textToSpeech",
+//             "https://medium-blog-post.onrender.comhttps://medium-blog-2025.onrender.com/api/textToSpeechfun/textToSpeech",
 //             {
 //               method: "POST",
 //               headers: {
@@ -268,7 +268,7 @@ const summarizeFun = async () => {
 
 //   const summarizeFun = async () => {
 //     try {
-//       const response = await fetch('/api/summaryFun/summary', {
+//       const response = await fetch('https://medium-blog-2025.onrender.com/api/summaryFun/summary', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',

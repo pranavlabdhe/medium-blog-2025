@@ -7,7 +7,7 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('/api/reset-password/forgot-password', {
+    const res = await fetch('https://medium-blog-2025.onrender.com/api/reset-password/forgot-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),

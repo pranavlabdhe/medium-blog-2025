@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch('/api/post/getPosts');
+      const res = await fetch('https://medium-blog-2025.onrender.com/api/post/getPosts');
       const data = await res.json();
       setPosts(data.posts);
     };

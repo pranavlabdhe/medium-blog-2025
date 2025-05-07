@@ -22,7 +22,7 @@ export default function DashboardComp() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userRes = await fetch('/api/user/getusers?limit=5');
+        const userRes = await fetch('https://medium-blog-2025.onrender.com/api/user/getusers?limit=5');
         const userData = await userRes.json();
         if (userRes.ok) {
           setUsers(userData.users);
@@ -36,7 +36,7 @@ export default function DashboardComp() {
 
     const fetchPostsData = async () => {
       try {
-        const postsRes = await fetch('/api/post/posts/' + currentUser._id);
+        const postsRes = await fetch('https://medium-blog-2025.onrender.com/api/post/posts/' + currentUser._id);
         const postsData = await postsRes.json();
         if (postsRes.ok) {
           setPosts(postsData);
@@ -52,7 +52,7 @@ export default function DashboardComp() {
 
     const fetchCommentsData = async () => {
       try {
-        const commentsRes = await fetch('/api/comment/getcomments?limit=5');
+        const commentsRes = await fetch('https://medium-blog-2025.onrender.com/api/comment/getcomments?limit=5');
         const commentsData = await commentsRes.json();
         if (commentsRes.ok) {
           setComments(commentsData.comments);

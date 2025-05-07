@@ -16,7 +16,7 @@
 
 //   const fetchPosts = async () => {
 //     if(currentUser.isAdmin === false) {
-//          const response = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+//          const response = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser._id}`);
 //          const data = await response.json();
 //          setAdminPosts(data)
 //     }
@@ -25,12 +25,12 @@
 //     const fetchAdminPosts = async () => {
 //       try {
 //         if(currentUser.isAdmin) {
-//           const response = await fetch('/api/post/adminposts');
+//           const response = await fetch('https://medium-blog-2025.onrender.com/api/post/adminposts');
 //           const data = await response.json();
 //           setUserPosts(data)
 //         }
 //         // else {
-//         //   const response = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+//         //   const response = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser._id}`);
 //         //   const data = await response.json();
 //         //   setAdminPosts(data)
 //         // }
@@ -50,7 +50,7 @@
 //     const startIndex = userPosts.length;
 //     try {
 //       const res = await fetch(
-//         `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
+//         `https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
 //       );
 //       const data = await res.json();
 //       if (res.ok) {
@@ -68,7 +68,7 @@
 //     setShowModal(false);
 //     try {
 //       const res = await fetch(
-//         `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
+//         `https://medium-blog-2025.onrender.com/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
 //         {
 //           method: 'DELETE',
 //         }
@@ -242,7 +242,7 @@
 //   setShowModal(false);
 //   try {
 //     const res = await fetch(
-//       `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
+//       `https://medium-blog-2025.onrender.com/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
 //       {
 //         method: 'DELETE',
 //       }
@@ -330,7 +330,7 @@ export default function DashPosts() {
     const startIndex = userPosts.length;
     try {
       const res = await fetch(
-        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
+        `https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
       );
       const data = await res.json();
       if (res.ok) {
@@ -345,12 +345,12 @@ export default function DashPosts() {
   };
 
   const fetchUserPosts = async () => {
-    const response = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+    const response = await fetch(`https://medium-blog-2025.onrender.com/api/post/getposts?userId=${currentUser._id}`);
     return response.json();
   };
 
   const fetchAdminPosts = async () => {
-    const response = await fetch('/api/post/adminposts');
+    const response = await fetch('https://medium-blog-2025.onrender.com/api/post/adminposts');
     return response.json();
   };
 
@@ -358,7 +358,7 @@ export default function DashPosts() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
+        `https://medium-blog-2025.onrender.com/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
         {
           method: 'DELETE',
         }

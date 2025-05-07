@@ -4,7 +4,7 @@ import { fetchPostsStart, fetchPostsSuccess, fetchPostsFailure } from './postSli
 export const fetchPostsByUserId = (userId) => async (dispatch) => {
   dispatch(fetchPostsStart());
   try {
-    const response = await axios.get(`/api/post/posts/${userId}`);
+    const response = await axios.get(`https://medium-blog-2025.onrender.com/api/post/posts/${userId}`);
     dispatch(fetchPostsSuccess(response.data));
   } catch (error) {
     dispatch(fetchPostsFailure(error.message));
@@ -14,7 +14,7 @@ export const fetchPostsByUserId = (userId) => async (dispatch) => {
 // export const fetchPostsByAdmin = () => async (dispatch) => {
 //     dispatch(fetchPostsStart());
 //     try {
-//       const response = await axios.get(`/api/post/adminposts`);
+//       const response = await axios.get(`https://medium-blog-2025.onrender.com/api/post/adminposts`);
 //       dispatch(fetchPostsSuccess(response.data));
 //     } catch (error) {
 //       dispatch(fetchPostsFailure(error.message));

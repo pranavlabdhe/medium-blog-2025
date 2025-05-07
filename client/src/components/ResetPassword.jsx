@@ -9,7 +9,7 @@ export default function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`/api/reset-password/reset-user-password/${token}`, {
+    const res = await fetch(`https://medium-blog-2025.onrender.com/api/reset-password/reset-user-password/${token}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password }),
