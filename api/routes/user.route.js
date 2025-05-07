@@ -19,22 +19,3 @@ router.get('/getusers', verifyToken, getUsers);
 router.get('/:userId', getUser);
 
 export default router;
-// const openaiClient = new openai.OpenAI({apiKey:process.env.OPENAI_API_KEY});
-// export const translateFun = async (req, res, next) => {
-//     try {
-//         const { text, source_language, target_language } = req.body;
-    
-//         // Perform translation using the OpenAI API
-//         const translation = await openaiClient.translation({
-//           engine: 'text-davinci-002',
-//           source_language,
-//           target_language,
-//           text,
-//         });
-    
-//         res.json({ translated_text: translation.data.translations[0].translated_text });
-//       } catch (error) {
-//         console.error('Translation error:', error);
-//         res.status(500).json({ error: 'An error occurred during translation' });
-//       }
-//     }
