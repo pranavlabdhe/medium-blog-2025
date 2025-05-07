@@ -28,7 +28,13 @@ mongoose
 const __dirname = path.resolve();
 
 const app = express();
-app.use(cors())
+app.use(cors(
+  {
+    origin:[''],
+    methods:['POST', 'GET'],
+    credentials:true
+  }
+))
 app.use(express.json());
 app.use(cookieParser());
 
