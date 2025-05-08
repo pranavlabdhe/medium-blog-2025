@@ -24,6 +24,7 @@ export default function CommentSection({ postId }) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials:'include',
         body: JSON.stringify({
           content: comment,
           postId,
