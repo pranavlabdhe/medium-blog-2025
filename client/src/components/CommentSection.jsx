@@ -102,6 +102,7 @@ export default function CommentSection({ postId }) {
       }
       const res = await fetch(`https://medium-blog-2025.onrender.com/api/comment/deleteComment/${commentId}`, {
         method: 'DELETE',
+        credentials:'include'
       });
       if (res.ok) {
         const data = await res.json();
