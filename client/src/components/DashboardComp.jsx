@@ -131,10 +131,102 @@
 //   );
 // }
 
+// import { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchPostsByUserId } from '../redux/postActions/postAction';
+// import { fetchPostsByAdmin } from '../redux/postActions/AdminActions';
+// import { HiDocumentText, HiArrowNarrowUp } from 'react-icons/hi';
+// import { Button, Table } from 'flowbite-react';
+// import { Link } from 'react-router-dom';
+
+// export default function DashboardComp() {
+//   const [posts, setPosts] = useState([]);
+//   const dispatch = useDispatch();
+//   const { currentUser } = useSelector((state) => state.user);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         if (currentUser) {
+//           if (currentUser.isAdmin) {
+//             const response = await fetch('https://medium-blog-2025.onrender.com/api/post/adminposts');
+//             const data = await response.json();
+//             if (response.ok) {
+//               setPosts(data);
+//             }
+//           } else {
+//             const response = await fetch(`https://medium-blog-2025.onrender.com/api/post/posts/${currentUser._id}`);
+//             const data = await response.json();
+//             if (response.ok) {
+//             setPosts(data)
+//             }
+//           }
+//         }
+//       } catch (error) {
+//         console.error('Error fetching posts:', error);
+//       }
+//     };
+
+//     fetchData();
+//   }, [currentUser, dispatch]);
+
+//   return (
+//     <div className='p-3 md:mx-auto'>
+//       <div className='flex-wrap flex gap-4 justify-center'>
+//         <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
+//           <div className='flex justify-between'>
+//             <div className=''>
+//               <h3 className='text-gray-500 text-md uppercase'>Total Posts</h3>
+//               <p className='text-2xl'>{posts.length}</p>
+//             </div>
+//             <HiDocumentText className='bg-lime-600  text-white rounded-full text-5xl p-3 shadow-lg' />
+//           </div>
+//           <div className='flex  gap-2 text-sm'>
+//             <span className='text-green-500 flex items-center'>
+//               <HiArrowNarrowUp />
+//               {/* You can calculate last month's posts count if needed */}
+//             </span>
+//             <div className='text-gray-500'>Last month</div>
+//           </div>
+//         </div>
+//       </div>
+//       <div className='flex flex-wrap gap-4 py-3 mx-auto justify-center'>
+//         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
+//           <div className='flex justify-between  p-3 text-sm font-semibold'>
+//             <h1 className='text-center p-2'>Recent posts</h1>
+//             <Button outline gradientDuoTone='purpleToPink'>
+//               <Link to={'/dashboard?tab=posts'}>See all</Link>
+//             </Button>
+//           </div>
+//           <Table hoverable>
+//             <Table.Head>
+//               <Table.HeadCell>Post image</Table.HeadCell>
+//               <Table.HeadCell>Post Title</Table.HeadCell>
+//               <Table.HeadCell>Category</Table.HeadCell>
+//             </Table.Head>
+//             <Table.Body>
+//               {posts.map((post) => (
+//                 <Table.Row key={post._id}>
+//                   <Table.Cell>
+//                     <img src={post.image} alt="Post" className="w-14 h-10 rounded-md bg-gray-500" />
+//                   </Table.Cell>
+//                   <Table.Cell>{post.title}</Table.Cell>
+//                   <Table.Cell>{post.category}</Table.Cell>
+//                 </Table.Row>
+//               ))}
+//             </Table.Body>
+//           </Table>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// 8th May 2025
+
+
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostsByUserId } from '../redux/postActions/postAction';
-import { fetchPostsByAdmin } from '../redux/postActions/AdminActions';
 import { HiDocumentText, HiArrowNarrowUp } from 'react-icons/hi';
 import { Button, Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
@@ -148,19 +240,24 @@ export default function DashboardComp() {
     const fetchData = async () => {
       try {
         if (currentUser) {
+          let fetchedPosts = [];
           if (currentUser.isAdmin) {
             const response = await fetch('https://medium-blog-2025.onrender.com/api/post/adminposts');
             const data = await response.json();
             if (response.ok) {
-              setPosts(data);
+              fetchedPosts = Array.isArray(data) ? data : data.posts || [];
             }
           } else {
             const response = await fetch(`https://medium-blog-2025.onrender.com/api/post/posts/${currentUser._id}`);
             const data = await response.json();
             if (response.ok) {
-            setPosts(data)
+              fetchedPosts = Array.isArray(data) ? data : data.posts || [];
             }
           }
+
+          // ✅ Sort posts by updatedAt descending
+          fetchedPosts.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+          setPosts(fetchedPosts);
         }
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -175,13 +272,13 @@ export default function DashboardComp() {
       <div className='flex-wrap flex gap-4 justify-center'>
         <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
-            <div className=''>
+            <div>
               <h3 className='text-gray-500 text-md uppercase'>Total Posts</h3>
               <p className='text-2xl'>{posts.length}</p>
             </div>
-            <HiDocumentText className='bg-lime-600  text-white rounded-full text-5xl p-3 shadow-lg' />
+            <HiDocumentText className='bg-lime-600 text-white rounded-full text-5xl p-3 shadow-lg' />
           </div>
-          <div className='flex  gap-2 text-sm'>
+          <div className='flex gap-2 text-sm'>
             <span className='text-green-500 flex items-center'>
               <HiArrowNarrowUp />
               {/* You can calculate last month's posts count if needed */}
@@ -190,9 +287,10 @@ export default function DashboardComp() {
           </div>
         </div>
       </div>
+
       <div className='flex flex-wrap gap-4 py-3 mx-auto justify-center'>
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
-          <div className='flex justify-between  p-3 text-sm font-semibold'>
+          <div className='flex justify-between p-3 text-sm font-semibold'>
             <h1 className='text-center p-2'>Recent posts</h1>
             <Button outline gradientDuoTone='purpleToPink'>
               <Link to={'/dashboard?tab=posts'}>See all</Link>
@@ -208,7 +306,11 @@ export default function DashboardComp() {
               {posts.map((post) => (
                 <Table.Row key={post._id}>
                   <Table.Cell>
-                    <img src={post.image} alt="Post" className="w-14 h-10 rounded-md bg-gray-500" />
+                    <img
+                      src={post.image}
+                      alt='Post'
+                      className='w-14 h-10 rounded-md bg-gray-500'
+                    />
                   </Table.Cell>
                   <Table.Cell>{post.title}</Table.Cell>
                   <Table.Cell>{post.category}</Table.Cell>

@@ -487,8 +487,7 @@ size='md'
 // }
 
 
-
-// 7th May 2025
+// 8th May 2025
 
 import { Modal, Table, Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
@@ -526,11 +525,13 @@ export default function DashPosts() {
           const data = await res.json();
           posts = Array.isArray(data) ? data : data.posts || [];
         } else {
-          // https://medium-blog-2025.onrender.com/api/post/posts/681bad025b2d718becb8d204
           const res = await fetch(`https://medium-blog-2025.onrender.com/api/post/posts/${currentUser._id}`);
           const data = await res.json();
           posts = Array.isArray(data) ? data : data.posts || [];
         }
+
+        // ✅ Sort posts by updatedAt (latest first)
+        posts.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
         setUserPosts(posts);
       } catch (error) {
@@ -658,3 +659,7 @@ export default function DashPosts() {
     </div>
   );
 }
+
+
+
+
