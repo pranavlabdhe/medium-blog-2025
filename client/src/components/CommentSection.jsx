@@ -65,6 +65,7 @@ export default function CommentSection({ postId }) {
       }
       const res = await fetch(`https://medium-blog-2025.onrender.com/api/comment/likeComment/${commentId}`, {
         method: 'PUT',
+        credentials:'include'
       });
       if (res.ok) {
         const data = await res.json();
