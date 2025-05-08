@@ -24,14 +24,16 @@ export const forgotPassword = async (req, res, next) => {
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
     await user.save();
 
-    const resetLink = `http://localhost:5173/reset-password/${token}`;
+    // const resetLink = `http://localhost:5173/reset-password/${token}`;
+    const resetLink = `https://medium-blog-2025.vercel.app/reset-password/${token}`;
+
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
-      },
+      },  
     });
 
     const mailOptions = {
