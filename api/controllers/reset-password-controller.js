@@ -24,7 +24,7 @@ export const forgotPassword = async (req, res, next) => {
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
     await user.save();
 
-    const resetLink = `https://medium-blog-2025.onrender.com/reset-password/${token}`;
+    const resetLink = `http://localhost:5173/reset-password/${token}`;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
