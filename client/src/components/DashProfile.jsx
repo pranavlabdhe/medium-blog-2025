@@ -412,6 +412,7 @@ export default function DashProfile() {
       dispatch(updateStart());
       const res = await fetch(`https://medium-blog-2025.onrender.com/api/user/update/${currentUser._id}`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -437,6 +438,7 @@ export default function DashProfile() {
       dispatch(deleteUserStart());
       const res = await fetch(`https://medium-blog-2025.onrender.com/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
+        credentials:'include'
       });
       const data = await res.json();
       if (!res.ok) {
@@ -532,7 +534,7 @@ export default function DashProfile() {
         <TextInput
           type='password'
           id='password'
-          placeholder='password'
+          placeholder='Change Password'
           onChange={handleChange}
         />
         <Button

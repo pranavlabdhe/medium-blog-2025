@@ -50,6 +50,7 @@ export default function DashUsers() {
     try {
         const res = await fetch(`https://medium-blog-2025.onrender.com/api/user/delete/${userIdToDelete}`, {
             method: 'DELETE',
+            credentials:'include'
         });
         const data = await res.json();
         if (res.ok) {
